@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-UserManagementApplication<ums>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "org.bisag.ums.UserManagementApplication",
+      "projectName": "ums",
+      "args": "",
+      "vmArgs": "-Dspring.profiles.active=dev",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
