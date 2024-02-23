@@ -10,6 +10,16 @@
       "args": "",
       "vmArgs": "-Dspring.profiles.active=dev",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-IndiaApplication<india>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.ecommerce.india.IndiaApplication",
+      "projectName": "india",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }

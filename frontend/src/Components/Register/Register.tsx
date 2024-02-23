@@ -6,6 +6,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Link from "next/link";
+import { FaRegUser } from "react-icons/fa";
+import { RiLockPasswordLine } from "react-icons/ri";
+import { FaMobileRetro } from "react-icons/fa6";
+import { MdOutlineMailOutline } from "react-icons/md";
+import axios from "axios";
+import Image from "next/image";
 
 type RegisterData = {
   username: string;
@@ -82,7 +88,15 @@ const Register = () => {
 
   const onSubmit: SubmitHandler<RegisterData> = async (data) => {
     try {
-      // const response = await fetch("/login")
+      const response = await axios.post(
+        "http://localhost:5000/auth/register",
+        data
+      );
+      // console.log(response);
+
+      if (response.data == "Registered") {
+        alert("Registered successfully");
+      }
       console.log("data", data);
     } catch (error: any) {
       alert(error.message);
@@ -91,88 +105,113 @@ const Register = () => {
 
   return (
     <>
-      <div className="row">
-        <div className="col-6">
-          <img
-            className={scss.image_wrapper}
-            src="/assests/images/login.webp"
-            alt="login_image"
-          />
-        </div>
-        <div className="col-6">
-          <Container>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-6 col-md-6 col-sm-12">
+            <Image
+              // className={scss.image_wrapper}
+              src="/assests/images/login.png"
+              width={500}
+              height={500}
+              alt="login_image"
+            />
+          </div>
+          <div className="col-6 col-md-6 col-sm-12">
             <div>
               <h2 className="d-flex  justify-content-center align-items-center">
-                Login
+                Register
               </h2>
             </div>
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
-              <div className={scss.input_wrapper}>
-                <TextInput
-                  label="Username"
-                  placeholder="Username"
-                  error={errors.username?.message}
-                  {...register("username")}
-                />
-                <Radio.Group
-                  onChange={(value: any) => {
-                    setValue("gender", value);
-                    clearErrors("gender");
-                  }}
-                  label="Gender"
-                  value={getValues("gender")}
-                  error={errors.gender?.message}
-                >
-                  <Group mt="xs">
-                    <Radio value="1" label="Male" />
-                    <Radio value="2" label="Female" />
-                  </Group>
-                </Radio.Group>
-                <PasswordInput
-                  label="Password"
-                  placeholder="password"
-                  autoComplete="new-password"
-                  error={errors.password?.message}
-                  {...register("password")}
-                />
-
-                <PasswordInput
-                  label="Confirm Password"
-                  placeholder="confirmpassword"
-                  error={errors.confirmPassword?.message}
-                  {...register("confirmPassword")}
-                />
-
-                <TextInput
-                  label="Mobile"
-                  type="number"
-                  placeholder="mobile"
-                  error={errors.mobile?.message}
-                  {...register("mobile")}
-                />
-                <TextInput
-                  label="Email"
-                  placeholder="email"
-                  error={errors.email?.message}
-                  {...register("email")}
-                  type="email"
-                  maxLength={10}
-                />
-                <TextInput
-                  label="Displayname"
-                  placeholder="displayName"
-                  error={errors.displayName?.message}
-                  {...register("displayName")}
-                />
-                <p className="mt-2">
-                  Dont have an account ? <Link href={"/register"}>Signup</Link>{" "}
-                </p>
+              <div className="row">
+                <div className="col-6">
+                  <TextInput
+                    label="Username"
+                    placeholder="Username"
+                    leftSection={<FaRegUser />}
+                    error={errors.username?.message}
+                    {...register("username")}
+                  />
+                </div>
+                <div className="col">
+                  <Radio.Group
+                    onChange={(value: any) => {
+                      setValue("gender", value);
+                      clearErrors("gender");
+                    }}
+                    label="Gender"
+                    value={getValues("gender")}
+                    error={errors.gender?.message}
+                  >
+                    <Group mt="xs">
+                      <Radio value="1" label="Male" />
+                      <Radio value="2" label="Female" />
+                    </Group>
+                  </Radio.Group>
+                </div>
               </div>
+              <div className="row">
+                <div className="col">
+                  <PasswordInput
+                    label="Password"
+                    placeholder="password"
+                    leftSection={<RiLockPasswordLine />}
+                    autoComplete="new-password"
+                    error={errors.password?.message}
+                    {...register("password")}
+                  />
+                </div>
+                <div className="col">
+                  <PasswordInput
+                    label="Confirm Password"
+                    placeholder="confirmpassword"
+                    leftSection={<RiLockPasswordLine />}
+                    error={errors.confirmPassword?.message}
+                    {...register("confirmPassword")}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <TextInput
+                    label="Mobile"
+                    type="number"
+                    leftSection={<FaMobileRetro />}
+                    placeholder="mobile"
+                    error={errors.mobile?.message}
+                    {...register("mobile")}
+                    maxLength={10}
+                  />
+                </div>
+                <div className="col">
+                  <TextInput
+                    label="Email"
+                    placeholder="email"
+                    leftSection={<MdOutlineMailOutline />}
+                    error={errors.email?.message}
+                    {...register("email")}
+                    type="email"
+                  />
+                </div>
+              </div>
+
+              <TextInput
+                label="Displayname"
+                placeholder="displayName"
+                leftSection={<FaRegUser />}
+                error={errors.displayName?.message}
+                {...register("displayName")}
+                style={{ width: "299px" }}
+              />
+              <p className="mt-2">
+                Dont have an account ? <Link href={"/register"}>Signup</Link>{" "}
+              </p>
+
               <div className={scss.button_wrapper}>
                 <Button type="submit">Submit</Button>
               </div>
             </form>
-          </Container>
+          </div>
         </div>
       </div>
     </>

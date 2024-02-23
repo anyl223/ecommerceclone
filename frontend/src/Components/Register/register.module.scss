@@ -1,20 +1,19 @@
-.input_wrapper{
-    align-items: center;
-    margin-top: 25%;
-    width:400px;
-    margin-left: 20%;
-    margin-right:20%;
-  }
-  .button_wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    width: 30%;
-    margin-left: 20%;
-  
-  }
-  .image_wrapper{
-    height: 500;
-    width:700;
-  }
+.input_wrapper {
+  align-items: center;
+  margin-top: 25%;
+  width: 400px;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+.button_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 30%;
+  margin-left: 20%;
+}
+.image_wrapper {
+  height: 90vh;
+  width: auto;
+}

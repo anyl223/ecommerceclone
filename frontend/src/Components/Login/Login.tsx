@@ -6,6 +6,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Link from "next/link";
+import Image from "next/image";
+import axios from "axios";
+import { getFingerprint } from "@/utils/fingerprint";
 
 type LoginData = {
   username: string;
@@ -18,14 +21,32 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { register, handleSubmit ,formState:{errors}} = useForm<LoginData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginData>({
     resolver: yupResolver(validationSchema),
   });
 
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
     try {
-      // const response = await fetch("/login")
-      console.log("data", data);
+      const response = await axios.post(
+        "http://localhost:5000/auth/login",
+        {
+          ...data,
+          fp: getFingerprint(),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Example of a custom header
+            // Add any other headers as needed
+          },
+        }
+      );
+      // if (response.data == "Registered") {
+      //   alert("Registered successfully");
+      // }
     } catch (error: any) {
       alert(error.message);
     }
@@ -35,10 +56,12 @@ const Login = () => {
     <>
       <div className="row">
         <div className="col-6">
-          <img className={scss.image_wrapper}
+          <Image
+            className={scss.image_wrapper}
             src="/assests/images/login.webp"
             alt="login_image"
-          
+            width={500}
+            height={500}
           />
         </div>
         <div className="col-6">
